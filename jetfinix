@@ -1,0 +1,183 @@
+package Test_Cases.Consumer_Loan;
+
+import DataSource.DataFile;
+import Test_Cases.Base_Test;
+import Utility_class.Utility;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
+
+import java.time.Duration;
+
+public class LoanOnboardingJetfinix extends Base_Test {
+    @Test
+    public void clickOnOnboarding() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(Utility.getDriver(), Duration.ofSeconds(20, 0));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+      // wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[normalize-space()='Onboarding']"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/nav/div[2]/div[2]/a"))).click();
+     //  Utility.clickByxpath("//a[contains(text(),'Consumer')]");
+        Utility.clickByxpath("//a[normalize-space()='Apply Loan'] ");
+        Utility.sendKeysByxpath("//input[@id='MobileNo']",Mobile);
+       Utility.clickByxpath("//a[@id='btnMobileVerification']");
+        Thread.sleep(15000);
+        Utility.clickByxpath("//a[@id='btnOtpVerification']");
+        Utility.sendKeysByxpath("//input[@id='panNum']",PAN);
+        Utility.sendKeysByxpath("//input[@id='aDob']",DOB);
+        Utility.sendKeysByxpath("//input[@id='aAddress1']",Housename);
+        Utility.sendKeysByxpath("//input[@id='aCity']",City);
+        Select aState = new Select(Utility.findWebElement("aState"));
+        aState.selectByValue("KL");
+        Utility.sendKeysByxpath("//input[@id='aPincode']",Zipcode);
+        Utility.sendKeysByxpath("//input[@id='email']",Email);
+        Utility.scrollToView("checkConscent");
+        Utility.clickById("checkConscent");
+        Utility.clickByxpath("//a[@id='btnPanVerification']");
+        Utility.sendKeysByid("AadhaarNum",Aadhaar);
+        Utility.clickById("btnAadhar");
+        Thread.sleep(15000);
+        Utility.clickByxpath("//a[@onclick='return AadharOTPVerification();']");
+        Thread.sleep(5000);
+        Utility.clickByxpath("//fieldset[@id='fieldset_eligibility']//a[contains(@class,'btn btn-danger form-wizard-close-btn float-left')][normalize-space()='Close']");
+       // Utility.tearDown();
+        Utility.clickByxpath("/html[1]/body[1]/div[1]/div[3]/nav[1]/div[1]/div[2]/a[1]");
+
+        //a[normalize-space()='Log Out']
+        Utility.clickByxpath("//a[normalize-space()='Log Out']");
+
+
+
+       // Utility.setDriver(new ChromeDriver());
+      //  Utility.getDriver().manage().window().maximize();
+      //  Utility.getDriver().get(Url);
+        Utility.sendKeysByid("txtUsername",DataFile.Username2);
+        Utility.sendKeysByid("txtPassword",DataFile.Password2);
+        Utility.clickByxpath("//button[@id='btnSubmit']");
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+        Utility.clickByxpath("/html[1]/body[1]/div[1]/div[2]/nav[1]/div[2]/div[4]/a[1]");
+        //a[@class='nav-link dropdown-toggle show']
+
+        Utility.clickByxpath("//a[@href='/Partners/CustomerLoanInfo']");
+        Utility.clickById("pills-tab-3-tab");
+     //tbody/tr[4]/td[8]/button[1]
+     //*[@id="tblrejected"]/tbody/tr[4]/td[8]/button
+     //*[@id="tblrejected"]/tbody/tr[1]/td[8]/button
+     Utility.sendKeysByxpath("//*[@id=\"tblrejected_filter\"]/label/input","DZYPB6100A");
+     Thread.sleep(6000);
+        Utility.clickByxpath("/html[1]/body[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[8]/button[1]");
+        Utility.sendKeysByid("statusChangeComments","test");
+        Utility.clickByxpath("//button[@id='modalButton']");
+        Thread.sleep(5000);
+        Utility.getDriver().switchTo().alert().accept();
+     //   Thread.sleep(5000);
+        Utility.clickByxpath("/html[1]/body[1]/div[1]/div[3]/nav[1]/div[1]/div[2]/a[1]");
+        Utility.clickByxpath("//a[normalize-space()='Log Out']");
+        Utility.sendKeysByid("txtUsername",DataFile.Username1);
+        Utility.sendKeysByid("txtPassword",DataFile.Password1);
+        Utility.clickByxpath("//button[@id='btnSubmit']");
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[normalize-space()='Onboarding']"))).click();
+        Utility.clickByxpath("//a[contains(text(),'Consumer')]");
+        Utility.sendKeysByxpath("//input[@id='MobileNo']",Mobile);
+        Utility.clickByxpath("//a[@id='btnMobileVerification']");
+        Select EmployementStatus = new Select(Utility.findWebElement("EmployementStatus"));
+        EmployementStatus.selectByValue("Salaried");
+        Utility.sendKeysByid("MonthlyIncome","100000");
+        Utility.sendKeysByid("EMICommitment","0");
+        Select ResidenceType = new Select(Utility.findWebElement("ResidenceType"));
+        ResidenceType.selectByValue("Owned");
+        Utility.sendKeysByid("Reference1Name","akash");
+        Utility.sendKeysByid("Reference1Mobile","3216549870");
+        Utility.sendKeysByid("Reference2Name","shaheen");
+        Utility.sendKeysByid("Reference2Mobile","1234567890");
+        Select UtilityBillType = new Select(Utility.findWebElement("UtilityBillType"));
+        UtilityBillType.selectByValue("Electricity Bill");
+        WebElement UtilityBill = Utility.findWebElement("UtilityBill");
+        UtilityBill.sendKeys(" C:\\Users\\ADMIN\\IdeaProjects\\Oroboro_QA_Test\\Test Data\\frontadhar.jpg");
+        WebElement SalarySlip = Utility.findWebElement("SalarySlip");
+        SalarySlip.sendKeys(" C:\\Users\\ADMIN\\IdeaProjects\\Oroboro_QA_Test\\Test Data\\frontadhar.jpg");
+       // Utility.clickById("fieldset_demographicdata");
+       // Utility.scrollToViewxpath("//*[@id=\"fieldset_demographicdata\"]/div[8]/a[2]");
+     //  Utility.clickByxpath("/html/body/div[1]/div[3]/div[1]/div[2]/div/div/div/div/div/section/div/form/div[2]/fieldset[6]/div[8]/a[2]");
+      Thread.sleep(5000);
+       Utility.clickByxpath("//*[@id=\"fieldset_demographicdata\"]/div[8]/a[2]");
+       Utility.clickById("btnContinue");
+     Select prName = new Select(Utility.findWebElement("prName"));
+     prName.selectByValue("SmartPhone");
+     Utility.sendKeysByid("pBN","samsung");
+     Utility.sendKeysByid("pModel","A2");
+     Utility.sendKeysByid("pECA","15000");
+     Utility.clickByxpath("//a[@onclick='return ProductDetails();']");
+     Select chooseemitenure = new Select(Utility.findWebElement("selectTenure"));
+     chooseemitenure.selectByValue("8");
+     Thread.sleep(5000);
+    // Utility.scrollToViewxpath("(//a[@onclick='return TenureOtp();'])[1]");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html[1]/body[1]/div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/section[1]/div[1]/form[1]/div[2]/fieldset[9]/div[4]/a[2]"))).click();
+
+        Utility.clickByxpath("/html[1]/body[1]/div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/section[1]/div[1]/form[1]/div[2]/fieldset[9]/div[4]/a[2]");
+     Thread.sleep(8000);
+     Utility.clickByxpath("//a[@onclick='return TenureConfirmation();']");
+     Utility.clickById("bdAccountNo");
+     Utility.clickById("iFSCCode");
+     Select selectAccountType = new Select(Utility.findWebElement("selectAccountType"));
+     selectAccountType.selectByValue("Savings");
+     Utility.clickByxpath("//a[@onclick='return BankAccountVerification();']");
+     WebElement supportingdoc = Utility.findWebElement("supportingdoc");
+     supportingdoc.sendKeys(" C:\\Users\\ADMIN\\IdeaProjects\\Oroboro_QA_Test\\Test Data\\frontadhar.jpg");
+     Utility.clickByxpath("//a[@onclick='return SupportingDocumentUpload();']");
+        //td[normalize-space()='MAHIN THENALIL BAKKER']
+
+
+
+
+
+
+
+
+
+
+
+
+       // Utility.clickByxpath("//fieldset[@id='fieldset_eligibility']//a[@class='btn btn-danger form-wizard-close-btn float-left'][normalize-space()='Close']");
+//        Utility.clickByxpath("/html/body/div[1]/div[3]/nav/div/div[2]/a");
+//        Utility.clickByxpath("//a[normalize-space()='Log Out']");
+//        Utility.sendKeysByid("txtUsername",DataFile.Username2);
+//        Utility.sendKeysByid("txtPassword",DataFile.Password2);
+//        Utility.clickByxpath("//button[@id='btnSubmit']");
+//        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+//        Utility.clickByxpath("/html[1]/body[1]/div[1]/div[2]/nav[1]/div[2]/div[4]/a[1]");
+//        Utility.clickByxpath("//a[@href='/Partners/CustomerLoanInfo']");
+//        Utility.clickById("pills-tab-3-tab");
+//        Utility.clickByxpath("/html[1]/body[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[8]/button[1]");
+//        Utility.sendKeysByid("statusChangeComments","test");
+//        Utility.clickByxpath("//button[@id='modalButton']");
+//        Utility.getDriver().switchTo().alert().accept();
+//        Utility.clickByxpath("//a[@aria-expanded='false']");
+//        Utility.clickByxpath("//a[normalize-space()='Log Out']");
+//        Utility.sendKeysByid("txtUsername",DataFile.Username1);
+//        Utility.sendKeysByid("txtPassword",DataFile.Password1);
+//        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[normalize-space()='Onboarding']"))).click();
+//        Utility.clickByxpath("//a[contains(text(),'Consumer')]");
+//        Utility.sendKeysByxpath("//input[@id='MobileNo']",Mobile);
+//        Utility.clickByxpath("//a[@id='btnMobileVerification']");
+//       // Select prName = new Select(Utility.findWebElement("prName"));
+//        prName.selectByValue("SmartPhone");
+//        Utility.sendKeysByid("pBN","samsung");
+//        Utility.sendKeysByid("pModel","A2");
+//        Utility.sendKeysByid("pECA","15000");
+//        Utility.clickByxpath("//a[@onclick='return ProductDetails();']");
+     //*[@id="fieldset_invoicedetails"]/div[6]/a[2]
+
+
+
+
+
+
+
+
+    }
+}
