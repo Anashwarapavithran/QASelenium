@@ -1,0 +1,58 @@
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.time.Duration;
+import java.util.logging.Logger;
+
+public class finoagent   {
+    private static final Logger LOGGER = Logger.getLogger(finoagent.class.getName());
+
+    @Test
+    public void finoagentTest()throws InterruptedException {
+        ChromeDriver anudriver = null;
+        try {
+            anudriver = new ChromeDriver();
+            anudriver.get("https://web1.oroboro.in/BusinessLoan/PANVerification?params=E3A9TNfMty1nHUsfYsjQkVXj5VAm9eVh/1TG3/uRXkU=&LoanType=BusinessLoan");
+            anudriver.findElement(By.id("BusinessTypeDrop")).click();
+            Thread.sleep(5000);
+            WebElement dropdownElement = anudriver.findElement(By.id("BusinessTypeDrop"));
+            Select dropdown = new Select(dropdownElement);
+            dropdown.selectByVisibleText("Sole Proprietorship/Individual");
+            Thread.sleep(1000);
+            anudriver.findElement(By.id("Panplaceholder")).click();
+            anudriver.findElement(By.id("PanSubmit")).click();
+            anudriver.manage().window().maximize();
+            anudriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+
+}catch (Exception e) {
+            // Log error message
+            LOGGER.severe("Test failed: " + e.getMessage());
+            // Take screenshot
+            takeScreenshot(anudriver);
+        } finally {
+            if (anudriver != null) {
+                anudriver.quit();
+            }
+        }
+    }
+
+    private void takeScreenshot(ChromeDriver driver) {
+        if (driver != null) {
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            try {
+                Files.copy(screenshot.toPath(), new File("test_failure.png").toPath());
+            } catch (IOException e) {
+                LOGGER.severe("Failed to save screenshot: " + e.getMessage());
+            }
+
+        }
+    }
+}
+
