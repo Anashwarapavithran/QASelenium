@@ -1,0 +1,209 @@
+package Test_Cases.Business_Loan;
+
+import DataSource.AllElements;
+import DataSource.Elements.ExecuteQuery;
+import DataSource.Elements.ExistingUsers;
+import Test_Cases.Base_Test;
+import Utility_class.Utility;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import javax.lang.model.util.Elements;
+import java.time.Duration;
+
+public class LoanSignupPage1 extends Base_Test implements AllElements {
+    @Test
+    public static void clickOnUserManagement () throws InterruptedException {
+
+
+        WebDriverWait wait = new WebDriverWait(Utility.getDriver(), Duration.ofSeconds(20, 0));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(UserManageXpath))).click();
+        Utility.clickByxpath(ViewUsersxpath);
+       // Utility.sendKeysByxpath(SearchUserXpath, "oroboro_online");
+        Utility.sendKeysByxpath(SearchUserXpath, Petpooja);
+
+
+        Thread.sleep(3000);
+        Utility.waitForVisbilityXpath(UserEditXpath).click();
+        //*[@id="tblLoan"]/tbody/tr/td[7]/a
+      //  /html/body/div[1]/div[3]/div[1]/div[1]/div/div/div/div[2]/div/table/tbody/tr/td[7]/a
+        //  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='edit']"))).click();
+
+
+        // Assert.assertEquals(actualTitle, expectedTitle);
+
+
+        for (String winHandle : Utility.getDriver().getWindowHandles()) {
+            Utility.getDriver().switchTo().window(winHandle);
+        }
+        Utility.getDriver().manage().window().maximize();
+        Thread.sleep(3000);
+        Utility.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        Utility.clickById(CheckUTMID);
+        //  Utility.getDriver().findElement(By.id("btnCopyToClipboard")).click();
+        Utility.clickById(UTMCopyID);
+        Utility.getDriver().switchTo().alert().accept();
+      //  getDriver().quit();
+//        Thread.sleep(5000);
+        var Text = Utility.findWebElement(UTMLinkID).getAttribute("value");
+
+
+     //   Utility.clickByxpath("//a[@aria-expanded='false']");
+      //  Utility.clickByxpath("//a[normalize-space()='Log Out']");
+       Text = Text.replace("web", "web1");
+     //    Utility.tearDown();
+       // System.out.println(Text);
+
+
+        System.setProperty("web-Utility.getDriver().chrome.Utility.getDriver()", "C:\\Users\\ADMIN\\Downloads\\chromedriver.exe");
+        WebDriver ref=Utility.getDriver();
+        Utility.setDriver(new ChromeDriver(Utility.opt));
+        Utility.getDriver().manage().window().maximize();
+        ref.quit();
+     //  Utility.driver.execute_script("replace.window.location{Text}")
+        Utility.getDriver().get(Text);
+        Thread.sleep(3000);
+         Select BUsinesstype = new Select(Utility.findWebElement("BusinessTypeDrop"));
+        BUsinesstype.selectByValue("Company");
+        Utility.sendKeysByid(PanFieldID, COMPANYPAN);
+
+        //  Thread.sleep(5000);
+        Utility.clickById("PanSubmit");
+        Thread.sleep(5000);
+        String PanVerifiedName = Utility.findWebElement("PanVerfiedName").getText();
+
+        Assert.assertNotNull(PanVerifiedName); // DIFFRENT PAN DIFFRENT NAME
+        Utility.clickById("PanSubmit");
+
+        Utility.sendKeysByid("Partnerpanss", PAN);
+        Utility.scrollToView("PanSubmit");
+        Utility.clickById("PanSubmit");
+        Utility.sendKeysByid("Mobile", Mobile);
+        Utility.scrollToView("SendMobileOTP");
+        Utility.clickById("SendMobileOTP");
+        Utility.clickByxpath("//button[contains(text(),'OK')]");   //HANDLING SWEET ALERT
+        Thread.sleep(15000); // OTP
+        Utility.clickById("VerifyMobileOtpVerify");
+        Utility.sendKeysByid("Email", Email);
+        Utility.clickById("PanVerifySubmit");
+
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("spinner")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+        } catch (Exception e) {
+            Thread.sleep(3000);
+        }
+        Select NatureOFBusiness = new Select(Utility.findWebElement(NatureofBusinessID));
+        NatureOFBusiness.selectByValue("Restaurant");
+
+       // Utility.clickById(TypeofBusinessID);
+       // Select BUsinesstype = new Select(Utility.findWebElement(TypeofBusinessID));
+       // BUsinesstype.selectByValue("Private Limited");
+
+        // Utility.getDriver().findElement(By.id("Bname")).sendKeys(Companyname);
+
+
+      //  Utility.clickById(RegTypeID);
+        Select RegistrationType = new Select(Utility.findWebElement(RegTypeID));
+       RegistrationType.selectByValue("Others");
+       // RegistrationType.selectByValue("FSSAI");
+        Utility.sendKeysByid(RegNoID, Regno);
+      Utility.clickById(BusinessYearID);
+        Select BusinessOfBusiness = new Select(Utility.findWebElement(BusinessYearID));
+        BusinessOfBusiness.selectByValue("3 YEARS");
+        Utility.sendKeysByid(BusinessNameID, Companyname);
+
+        Utility.sendKeysByid("BusinessAddress","thenlil");
+        Utility.sendKeysByid("BusinessPincode","686673");     // others
+       Utility.sendKeysByid("BusinessOwnerName","mahin");
+      Utility.sendKeysByid("BusinessRegistrationDate",DOB);  //OTHERS
+        WebElement inputGroupFileLicense = Utility.findWebElement("inputGroupFileLicense");
+       inputGroupFileLicense.sendKeys(" C:\\Users\\ADMIN\\IdeaProjects\\Oroboro_QA_Test\\Test Data\\frontadhar.jpg");
+        Utility.scrollToView(BussinessTypeSubmit);
+        Utility.clickById(BussinessTypeSubmit);
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("spinner")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+        } catch (Exception e) {
+            Thread.sleep(5000);
+        }
+        Thread.sleep(10000);
+       Utility.clickById("capture");
+       Utility.clickById("uploadImage");
+
+
+
+
+//        Utility.sendKeysByid("Mobile", Mobile);
+//        Utility.sendKeysByid("Email", Email);
+//        Utility.clickById("MobileVerification");
+//        Thread.sleep(20000);
+//        Utility.clickById("MobileVerificationOtp");
+
+
+
+        Utility.sendKeysByid("AadhaarNumber", Aadhaar);
+        Utility.clickById("AadharSubmit");
+        Utility.clickByxpath("//button[contains(text(),'OK')]");
+        Thread.sleep(30000);
+
+        try {
+            Utility.clickById("AadharotpVerify");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("spinner")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("spinner")));
+        } catch (Exception e) {
+            Thread.sleep(5000);
+        }
+//        Utility.sendKeysByid("txtname", Name);
+//        Utility.sendKeysByid("txtdob", DOB);
+        Utility.sendKeysByid("houseno", Housename);
+        Utility.sendKeysByid("Area", Housename);
+
+//        Utility.sendKeysByid("txtpost", Post);
+        Utility.sendKeysByid("City", City);
+        Utility.sendKeysByid("District", "ERNAKULAM");
+
+//        Utility.getDriver().findElement(By.id("aState")).click();
+
+        Select aState = new Select(Utility.findWebElement("State"));
+
+       aState.selectByValue("KL");
+        Utility.sendKeysByid("pincode", Zipcode);
+        Utility.clickById("OwnHouse");
+//        WebElement Adhaarfront = Utility.findWebElement("inputGroupFilefrontAadhar");
+//        Adhaarfront.sendKeys(" C:\\Users\\ADMIN\\IdeaProjects\\Oroboro_QA_Test\\Test Data\\frontadhar.jpg");
+//        WebElement Adhaarback = Utility.findWebElement("inputGroupFileBackAadhar");
+//        Adhaarback.sendKeys("C:\\Users\\ADMIN\\IdeaProjects\\Oroboro_QA_Test\\Test Data\\backadhar.jpg");
+//        Utility.scrollToView("Uploadsubmit");
+//        Utility.waitForVisbilityId("Uploadsubmit").click();
+        Utility.sendKeysByid("MonthlyIncome", Monthlyincome);
+        Utility.sendKeysByid("MonthlyExpenses", Monthlyexpense);
+        Utility.sendKeysByid("ExistingEMI", Existingemi);
+        Select BankName = new Select(Utility.findWebElement("DigiBankName"));
+        BankName.selectByValue("2");
+        Select ProofType = new Select(Utility.findWebElement("ProofType"));
+        ProofType.selectByValue("Electricbill");
+        WebElement AddressProof = Utility.findWebElement("ImageProofType");
+        AddressProof.sendKeys(" C:\\Users\\ADMIN\\IdeaProjects\\Oroboro_QA_Test\\Test Data\\frontadhar.jpg");
+       WebElement BankStatement = Utility.findWebElement("ImageFinanProofType");
+        BankStatement.sendKeys("C:\\Users\\ADMIN\\IdeaProjects\\Oroboro_QA_Test\\Test Data\\backadhar.jpg");
+        Utility.scrollToView("FinancialSubmit");
+        Utility.clickById("FinancialSubmit");
+        Thread.sleep(30000);
+        Utility.scrollToView("verifysubmit");
+      //  Utility.scrollToViewxpath("//*[@id=\"verifysubmit\"]");
+        Utility.clickById("verifysubmit");
+        Utility.clickByxpath("//button[contains(text(),'Close')]");
+
+
+      //  Utility.getDriver().switchTo().alert().accept();
+    }
+}
